@@ -1,4 +1,5 @@
 import React from 'react'
+import $ from 'jquery'
 
 class TodoList extends React.Component {
   constructor() {
@@ -10,13 +11,11 @@ class TodoList extends React.Component {
   }
 
   componentDidMount() {
-    this.setState({
-      todos: [
-        { title: 'Do the laundry', completed: false },
-        { title: 'Conquer the world', completed: true },
-        { title: 'Clean up room', completed: false }
-      ]
-    })
+    $.get("http://localhost:3001/todos.json", (function(data) {
+      this.setState({
+        todos: data,
+      })
+    }).bind(this))
   }
 
   render() {
