@@ -26,11 +26,22 @@ module.exports = {
   ],
   module: {
     loaders: [{
+<<<<<<< HEAD
       test: /\.jsx?/,
       loader: 'babel',
       query: {
         presets: ['es2015', 'react']
       },
+||||||| merged common ancestors
+      test: /\.js$/,
+      loaders: ['babel'],
+=======
+      test: /\.js$/,
+      loader: ['babel'],
+      query: {
+        presets: ['es2015', 'react']
+      },
+>>>>>>> master
       include: path.join(__dirname, 'src')
     }]
   }
