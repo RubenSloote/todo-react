@@ -11,6 +11,8 @@ class TodoList extends React.Component {
     }
   }
 
+  const self = this
+
   loadTodos() {
     $.get("http://localhost:3001/todos.json", (function(data) {
       this.setState({
@@ -20,10 +22,6 @@ class TodoList extends React.Component {
   }
 
   componentDidMount() {
-    this.loadTodos()
-  }
-
-  componentDidUpdate() {
     this.loadTodos()
   }
 
@@ -43,7 +41,7 @@ class TodoList extends React.Component {
       contentType: "application/json",
       dataType: "json"
     }).done(function( data ) {
-      // alert( "Data saved: " + data )
+      self.loadTodos()
     })
     .fail(function(error) {
       console.log(error);
