@@ -10,12 +10,20 @@ class TodoList extends React.Component {
     }
   }
 
-  componentDidMount() {
+  loadTodos() {
     $.get("http://localhost:3001/todos.json", (function(data) {
       this.setState({
         todos: data,
       })
     }).bind(this))
+  }
+
+  componentDidMount() {
+    this.loadTodos()
+  }
+
+  componentDidUpdate() {
+    this.loadTodos()
   }
 
   createTodo(event){
@@ -33,9 +41,8 @@ class TodoList extends React.Component {
       }),
       contentType: "application/json",
       dataType: "json"
-
     }).done(function( data ) {
-      alert( "Data saved: " + data );
+      // alert( "Data saved: " + data )
     })
     .fail(function(error) {
       console.log(error);
