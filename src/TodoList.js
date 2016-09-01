@@ -1,4 +1,5 @@
 import React from 'react'
+import Todo from './Todo'
 import $ from 'jquery'
 
 class TodoList extends React.Component {
@@ -10,6 +11,8 @@ class TodoList extends React.Component {
     }
   }
 
+  const self = this
+
   loadTodos() {
     $.get("http://localhost:3001/todos.json", (function(data) {
       this.setState({
@@ -19,10 +22,6 @@ class TodoList extends React.Component {
   }
 
   componentDidMount() {
-    this.loadTodos()
-  }
-
-  componentDidUpdate() {
     this.loadTodos()
   }
 
@@ -42,22 +41,27 @@ class TodoList extends React.Component {
       contentType: "application/json",
       dataType: "json"
     }).done(function( data ) {
-      // alert( "Data saved: " + data )
+      self.loadTodos()
     })
     .fail(function(error) {
       console.log(error);
     });
   }
 
-  render() {
-    let todos = this.state.todos.map(function(todo) {
-      return <li key={todo.id}><h1>{todo.title}</h1></li>
-    })
+  renderTodo(todo, index) {
+    console.log(todo)
+    return (
+      <Todo
+        key={todo.id}
+        title={todo.title}/>
+    )
+  }
 
+  render() {
     return (
       <div>
         <ul>
-          {todos}
+          {this.state.todos.map(this.renderTodo.bind(this))}
         </ul>
 
         <form onSubmit={this.createTodo.bind(this)}>
